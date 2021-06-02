@@ -743,4 +743,20 @@ class Admin extends CI_Controller
         );
         redirect('admin/keputusan');
     }
+
+    function penilaian()
+    {
+        $dtKriteria = $this->Admin_model->get('kriteria', [])->result();
+        $arr = [];
+        foreach ($dtKriteria as $kriteria) :
+            $nilai = $this->Admin_model->get_max('penilaian', 'nilai', ['kd_kriteria' => $kriteria->kode])->row();
+            $nilai = $this->Admin_model->get_max('penilaian', 'nilai', ['kd_kriteria' => $kriteria->kode])->row();
+            $arr[$kriteria->kode]['max'] = $nilai->nilai;
+            $arr[$kriteria->kode]['min'] = $nilai->nilai;
+        endforeach;
+
+        echo '<pre>';
+        var_dump($arr);
+        die;
+    }
 }

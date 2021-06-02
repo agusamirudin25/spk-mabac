@@ -27,6 +27,23 @@ class Admin_model extends CI_Model
         $this->db->update($table, $data, $where);
     }
 
+    function get($table, $where)
+    {
+        return $this->db->get_where($table, $where);
+    }
+    function get_max($table, $field, $where = [])
+    {
+        $this->db->where($where);
+        $this->db->select_max($field);
+        return $this->db->get($table);
+    }
+    function get_min($table, $field, $where = [])
+    {
+        $this->db->where($where);
+        $this->db->select_max($field);
+        return $this->db->get($table);
+    }
+
 
     // Menampilkan data karyawan
     public function lihat_karyawan()
