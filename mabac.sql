@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 30, 2021 at 12:54 PM
+-- Generation Time: Jun 03, 2021 at 01:38 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.8
 
@@ -32,7 +32,7 @@ CREATE TABLE `isi_kuisioner` (
   `id` int(11) NOT NULL,
   `nik` int(20) NOT NULL,
   `kode_pertanyaan` varchar(4) NOT NULL,
-  `nilai` int(1) DEFAULT NULL
+  `nilai` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -40,14 +40,19 @@ CREATE TABLE `isi_kuisioner` (
 --
 
 INSERT INTO `isi_kuisioner` (`id`, `nik`, `kode_pertanyaan`, `nilai`) VALUES
-(243, 2147483647, 'P01', 5),
-(244, 2147483647, 'P02', NULL),
-(245, 2147483647, 'P03', NULL),
-(246, 2147483647, 'P04', NULL),
-(247, 2147483647, 'P05', NULL),
-(248, 2147483647, 'P06', NULL),
-(249, 2147483647, 'P07', NULL),
-(250, 2147483647, 'P08', NULL);
+(288, 122334455, 'P01', 3),
+(289, 123456788, 'P01', 5),
+(290, 123456788, 'P02', 5),
+(291, 123456788, 'P03', 5),
+(292, 123456788, 'P04', 5),
+(293, 123456788, 'P05', 5),
+(294, 123456788, 'P06', 5),
+(295, 1234567890, 'P01', 5),
+(296, 1234567890, 'P02', 5),
+(297, 1234567890, 'P03', 5),
+(298, 1234567890, 'P04', 5),
+(299, 1234567890, 'P05', 5),
+(300, 1234567890, 'P06', 5);
 
 -- --------------------------------------------------------
 
@@ -71,9 +76,8 @@ CREATE TABLE `karyawan` (
 --
 
 INSERT INTO `karyawan` (`kode`, `nik`, `nama`, `alias`, `pendidikan`, `jabatan`, `tgl_masuk`, `status`) VALUES
-('', '11111111111111111111', 'DIANAA', 'DIAN', 'SMA', 'operator produksi', '2021-05-26', ''),
-('', '123346457568786', 'coba', 'coba', 'SMA', 'Operator', '2021-05-25', ''),
-('A01', '12345654321', 'Zuhdiana Mahmudiyah', 'Diana', 'S1', 'Admin', '2021-05-01', ''),
+('', '122334455', 'Zuhdiana mahmudiyah', 'Diana', 'D3', 'Admin', '2021-06-02', ''),
+('', '1234566666', 'Tes', 'Tes', 'SMA', 'Operator', '2021-06-03', ''),
 ('', '123456788', 'Diana', 'Dian', 'S1', 'operator produksi', '2021-05-25', ''),
 ('A02', '1234567890', 'Bambang Pamungkas', 'Bams', 'SMA', 'Operator', '2021-05-19', '');
 
@@ -99,9 +103,8 @@ CREATE TABLE `keputusan` (
 --
 
 INSERT INTO `keputusan` (`kode`, `nama`, `c01`, `c02`, `c03`, `c04`, `c05`, `status`) VALUES
-('A01', 'Zuhdiana Mahmudiyah', 5, 3, 4, 5, 5, ''),
-('A02', 'Bambang Pamungkas', 4, 3, 4, 3, 5, ''),
-('A03', 'coba', 100, 2, 3, 2, 1, '');
+('A01', 'Zuhdiana mahmudiyah', 256, 1, 3, 5, 30, ''),
+('A02', 'Diana', 150, 1, 5, 3, 20, '');
 
 -- --------------------------------------------------------
 
@@ -128,32 +131,6 @@ INSERT INTO `kriteria` (`kode`, `nama`, `tipe`, `bobot`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `kuisioner`
---
-
-CREATE TABLE `kuisioner` (
-  `kode` varchar(3) NOT NULL,
-  `pertanyaan` text NOT NULL,
-  `status` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `kuisioner`
---
-
-INSERT INTO `kuisioner` (`kode`, `pertanyaan`, `status`) VALUES
-('P01', 'apa kamu bekerja dengan benarrrrrrr?', ''),
-('P02', 'Apa kamu bekerja dengan sungguh-sungguh?', ''),
-('P03', 'Apakah kamu bertanggung jawab terhadap pekerjaan?', ''),
-('P04', 'Tes?', ''),
-('P05', 'tes satu', ''),
-('P06', 'tes dua', ''),
-('P07', 'tes empat', ''),
-('P08', 'tes lima', '');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `opsi`
 --
 
@@ -176,6 +153,30 @@ INSERT INTO `opsi` (`nilai`, `opsi`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `pertanyaan`
+--
+
+CREATE TABLE `pertanyaan` (
+  `kode` varchar(3) NOT NULL,
+  `pertanyaan` text NOT NULL,
+  `status` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pertanyaan`
+--
+
+INSERT INTO `pertanyaan` (`kode`, `pertanyaan`, `status`) VALUES
+('P01', 'apa kamu bekerja dengan benarrrrrrr??', ''),
+('P02', 'Apa kamu bekerja dengan sungguh-sungguh?', ''),
+('P03', 'Apakah kamu bertanggung jawab terhadap pekerjaan?', ''),
+('P04', 'tes satu', ''),
+('P05', 'tes dua', ''),
+('P06', 'tes tiga', '');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user`
 --
 
@@ -194,7 +195,7 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`nik`, `username`, `nama`, `password`, `role_id`) VALUES
 (12345678, 'SuperAdmin', 'Zuhdiana Mahmudiyah', '123456', 1),
 (123451111, 'diana', 'diana', '123456', 2),
-(1234567890, 'Bambang', 'Bambang Pamungkas', '123456', 2);
+(2147483647, 'dian', 'dian m', '123456', 1);
 
 -- --------------------------------------------------------
 
@@ -244,16 +245,16 @@ ALTER TABLE `kriteria`
   ADD PRIMARY KEY (`kode`);
 
 --
--- Indexes for table `kuisioner`
---
-ALTER TABLE `kuisioner`
-  ADD PRIMARY KEY (`kode`);
-
---
 -- Indexes for table `opsi`
 --
 ALTER TABLE `opsi`
   ADD PRIMARY KEY (`nilai`);
+
+--
+-- Indexes for table `pertanyaan`
+--
+ALTER TABLE `pertanyaan`
+  ADD PRIMARY KEY (`kode`);
 
 --
 -- Indexes for table `user`
@@ -275,7 +276,7 @@ ALTER TABLE `user_role`
 -- AUTO_INCREMENT for table `isi_kuisioner`
 --
 ALTER TABLE `isi_kuisioner`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=251;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=301;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

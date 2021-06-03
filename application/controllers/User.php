@@ -9,9 +9,9 @@ class User extends CI_Controller
 
         //cek session
         if (!$this->session->userdata('username')) {
-            redirect('auth');
+            redirect('login');
         } elseif ($this->session->userdata('role_id') != 2) {
-            redirect('auth/blocked');
+            redirect('login/blocked');
         }
 
         $this->load->model('User_model', 'user_model');
@@ -78,9 +78,8 @@ class User extends CI_Controller
     public function simpan_kuisioner()
     {
         $pertanyaan = $this->user_model->getPertanyaan();
-        $nik = $this->input->post('nikKaryawan');
-        // var_dump($nik);
-        // die;
+        $nik = $this->input->post('nik');
+
         foreach ($pertanyaan as $p) {
             $data = [
                 'id' => '',
@@ -91,17 +90,16 @@ class User extends CI_Controller
             // var_dump($data);
             // die;
             $this->db->insert('isi_kuisioner', $data);
+            //
         }
+        redirect('user/kuesioner');
     }
 
     public function hitung_kuesioner($nik)
     {
         $dataSum = $this->db->select_sum('nilai')->get('isi_kuisioner')->result_array();
-        var_dump($dataSum);
         $jumlahPertanyaan = $this->db->get('kuisioner')->num_rows();
-        var_dump($jumlahPertanyaan);
         $avg = (int)$dataSum / $jumlahPertanyaan;
-        var_dump($avg);
         if ($avg > 35) {
             $nilai = 5;
         } elseif (($avg >= 30) && ($avg <= 34)) {

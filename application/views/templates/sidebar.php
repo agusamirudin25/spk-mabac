@@ -26,7 +26,7 @@
                 <!-- Add icons to the links using the .nav-icon classwith font-awesome or any other icon font library -->
                 <li class="nav-item">
                 <li class="nav-item">
-                    <a href="<?php echo base_url('Admin/karyawan'); ?>" class="nav-link">
+                    <a href="<?php echo base_url('Karyawan/karyawan'); ?>" class="nav-link">
                         <i class="nav-icon fas fa-id-card"></i>
                         <p>
                             Kelola Karyawan
@@ -35,7 +35,7 @@
                     <hr class="bg-secondary">
                 </li>
                 <li class="nav-item">
-                    <a href="<?php echo base_url('Admin/pengguna'); ?>" class="nav-link">
+                    <a href="<?php echo base_url('Pengguna/pengguna'); ?>" class="nav-link">
                         <i class="nav-icon fas fa-id-badge"></i>
                         <p>
                             Kelola Pengguna
@@ -44,16 +44,16 @@
                     <hr class="bg-secondary">
                 </li>
                 <li class="nav-item">
-                    <a href="<?php echo base_url('Admin/kuesioner'); ?>" class="nav-link">
+                    <a href="<?php echo base_url('Pertanyaan/kuesioner'); ?>" class="nav-link">
                         <i class="nav-icon fas fa-file-alt"></i>
                         <p>
-                            Kelola Kuesioner
+                            Kelola Pertanyaan
                         </p>
                     </a>
                     <hr class="bg-secondary">
                 </li>
                 <li class="nav-item">
-                    <a href="<?php echo base_url('Admin/kriteria'); ?>" class="nav-link">
+                    <a href="<?php echo base_url('Kriteria/kriteria'); ?>" class="nav-link">
                         <i class="nav-icon fas fa-cubes"></i>
                         <p>
                             Kelola Kriteria
@@ -62,7 +62,7 @@
                     <hr class="bg-secondary">
                 </li>
                 <li class="nav-item">
-                    <a href="<?php echo base_url('Admin/keputusan'); ?>" class="nav-link">
+                    <a href="<?php echo base_url('Keputusan/keputusan'); ?>" class="nav-link">
                         <i class="nav-icon fab fa-hackerrank"></i>
                         <p>
                             Keputusan

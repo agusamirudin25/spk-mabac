@@ -749,12 +749,13 @@ class Admin extends CI_Controller
         $dtKriteria = $this->Admin_model->get('kriteria', [])->result();
         $arr = [];
         foreach ($dtKriteria as $kriteria) :
-            $nilai = $this->Admin_model->get_max('penilaian', 'nilai', ['kd_kriteria' => $kriteria->kode])->row();
-            $nilai = $this->Admin_model->get_max('penilaian', 'nilai', ['kd_kriteria' => $kriteria->kode])->row();
-            $arr[$kriteria->kode]['max'] = $nilai->nilai;
-            $arr[$kriteria->kode]['min'] = $nilai->nilai;
+            $nilai_max = $this->Admin_model->get_max('penilaian', 'nilai', ['kd_kriteria' => $kriteria->kode])->row();
+            $nilai_min = $this->Admin_model->get_min('penilaian', 'nilai', ['kd_kriteria' => $kriteria->kode])->row();
+            $arr[$kriteria->kode]['max'] = $nilai_max->nilai;
+            $arr[$kriteria->kode]['min'] = $nilai_min->nilai;
         endforeach;
 
+        $data['T1'] = $arr['C1']
         echo '<pre>';
         var_dump($arr);
         die;

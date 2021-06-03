@@ -48,31 +48,19 @@
                 </li>
             </ul>
 
-            <!-- SEARCH FORM -->
-            <form class="form-inline ml-3">
-                <div class="input-group input-group-sm">
-                    <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-                    <div class="input-group-append">
-                        <button class="btn btn-navbar" type="submit">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-                </div>
-            </form>
-
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
                 <!-- Notifications Dropdown Menu -->
                 <li class="dropdown user user-menu">
                     <a href="" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="<?= base_url(); ?>assets/files/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                        Alexander Pierce
+                        <img src="<?= base_url(); ?>assets/files/dist/img/avatar3.png" class="user-image" alt="User Image">
+                        User
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            <img src="<?= base_url(); ?>assets/files/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                            <p>Alexander Pierce - Web Developer</p>
+                            <img src="<?= base_url(); ?>assets/files/dist/img/avatar3.png" class="img-circle" alt="User Image">
+                            <p>User</p>
                         </li>
                         <!-- Menu Footer-->
                         <li class="user-footer">

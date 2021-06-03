@@ -78,7 +78,7 @@
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-right">
-                                <a href="<?= base_url('auth/logout'); ?>" class="btn btn-flat bg-red">Keluar</a>
+                                <a href="<?= base_url('login/logout'); ?>" class="btn btn-flat bg-red">Keluar</a>
                             </div>
                         </li>
                     </ul>

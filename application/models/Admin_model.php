@@ -2,6 +2,53 @@
 class Admin_model extends CI_Model
 {
 
+    // ./LOGIN //
+    public function login()
+    {
+        $username = $this->input->post('username');
+        $password = $this->input->post('password');
+
+        //mengambil satu baris data yang username-nya sesuai dengan username yang diinput
+        $user = $this->db->get_where('user', ['username' => $username])->row_array();
+
+        //jika ada usernya
+        if ($user) {
+            //jika passwordnya sama
+            if ($user['password'] == $password) {
+                //pemberian session
+                $data = [
+                    'username' => $user['username'],
+                    'nama' => $user['nama'],
+                    'role_id' => $user['role_id']
+                ];
+                $this->session->set_userdata($data);
+                return $this->db->get_where('user', ['username' => $username])->num_rows();
+            } else {
+                $this->session->set_flashdata(
+                    'message',
+                    '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+					Password <strong>salah!</strong>
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>'
+                );
+                return $data = 0;
+            }
+        } else {
+            $this->session->set_flashdata(
+                'message',
+                '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+					Pengguna <strong>tidak</strong> ditemukan
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>'
+            );
+        }
+    }
+    // ./END LOGIN //
+
     public function insertData($table, $data)
     {
         $this->db->insert($table, $data);
@@ -25,23 +72,6 @@ class Admin_model extends CI_Model
     public function updateData($table, $data, $where)
     {
         $this->db->update($table, $data, $where);
-    }
-
-    function get($table, $where)
-    {
-        return $this->db->get_where($table, $where);
-    }
-    function get_max($table, $field, $where = [])
-    {
-        $this->db->where($where);
-        $this->db->select_max($field);
-        return $this->db->get($table);
-    }
-    function get_min($table, $field, $where = [])
-    {
-        $this->db->where($where);
-        $this->db->select_max($field);
-        return $this->db->get($table);
     }
 
 
@@ -121,12 +151,12 @@ class Admin_model extends CI_Model
     //Menampilkan Data Kuesioner
     public function lihat_kuesioner()
     {
-        return $this->db->get('kuisioner')->result_array();
+        return $this->db->get('pertanyaan')->result_array();
     }
 
     public function getKuisCode()
     {
-        $kode = $this->db->select_max('kode')->get('kuisioner')->row_array();
+        $kode = $this->db->select_max('kode')->get('pertanyaan')->row_array();
         if (is_null($kode['kode'])) {
             $kdKuis = "P" . "01";
         } else {

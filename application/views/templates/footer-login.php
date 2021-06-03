@@ -2,25 +2,30 @@
     <div class="container">
         <div class="footer-custom">
 
-            <div class="footer-left">
-                <h5 class="txt-footer">Kelompok Tani Hortikultura <br>
-                    AGATHIS T - FARM <br>
-                    KARAWANG
-                </h5>
-                <p style="white-space: pre-line;">Bertani Mandiri Dengan Kreativitas dan Inovasi
-                    Jln. Haji Abdul Halim Krajan II RT/RW 04/02 Desa Majalaya, Kec. Majalaya, Kab. Karawang.</p>
+            <div class="footer-right">
+                <div class="info">
+                    <p>Hubungi Kami:</p>
+                    <p>0821-1021-5880</p> <br>
+                    <p>Alamat:</p>
+                    <p>Jl.Jend. Sudirman RT.014/RW.006, Sarimulya, Kec.Kotabaru</p>
+                    <p>Karawang, Jawa Barat 41374, Indonesia</p>
 
-                <div class="footer-sosmed">
-                    <a href="https://www.instagram.com/agathis_t_f/" target="_blank" class="txt-sosmed"><i class="fab fa-instagram" style="font-size: 20px;"></i>&nbsp; agathis_t_f</a>
                 </div>
             </div>
 
             <div class="footer-right">
                 <div class="info">
-                    <p>Hubungi Kami:</p>
-                    <a href="https://www.instagram.com/agathis_t_f/" target="_blank" style="color: white; text-decoration: underline;">instagram</a>
+                    <p>Jam Buka:</p>
+                    <p>Sen: 09.00–16.00</p>
+                    <p>Sel: 09.00–16.00</p>
+                    <p>Rab: 09.00–16.00</p>
+                    <p>Kam: 09.00–16.00</p>
+                    <p>Jum: 09.00–11.00, 13.00–16.00</p>
+                    <p>Sab: 09.00–15.00</p>
+                    <p>Min: Tutup</p>
                 </div>
             </div>
+
         </div>
     </div>
 </div>
