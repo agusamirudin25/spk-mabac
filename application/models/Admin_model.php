@@ -59,9 +59,9 @@ class Admin_model extends CI_Model
         $this->db->delete($table, $where);
     }
 
-    public function getAllData($table)
+    public function getAllData($table, $where = [])
     {
-        return $this->db->get($table);
+        return $this->db->get_where($table, $where);
     }
 
     public function getDataById($table, $where)
@@ -72,6 +72,11 @@ class Admin_model extends CI_Model
     public function updateData($table, $data, $where)
     {
         $this->db->update($table, $data, $where);
+    }
+    function insertBatch($table, $data)
+    {
+        $this->db->insert_batch($table, $data);
+        return $this->db->affected_rows();
     }
 
 

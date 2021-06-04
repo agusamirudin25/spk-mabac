@@ -16,14 +16,8 @@ class Keputusan extends CI_Controller
         }
     }
 
+
     public function index()
-    {
-        $this->load->view('templates/header');
-        $this->load->view('templates/sidebar');
-        $this->load->view('keputusan/index');
-        $this->load->view('templates/footer');
-    }
-    public function keputusan()
     {
         $data['judul'] = 'Karyawan';
         $data['karyawan'] = $this->Admin_model->getAllData($table = 'karyawan');
@@ -37,7 +31,7 @@ class Keputusan extends CI_Controller
     public function konfirmasi($kode)
     {
         $this->db->update('keputusan', ['status' => 1], ['kode' => $kode]);
-        redirect('keputusan/keputusan');
+        redirect('keputusan');
     }
 
     public function tambah_penilaian($nik)
@@ -113,7 +107,7 @@ class Keputusan extends CI_Controller
 					</button>
 				</div>'
             );
-            redirect('keputusan/keputusan');
+            redirect('keputusan');
         }
     }
 
@@ -166,7 +160,7 @@ class Keputusan extends CI_Controller
 					</button>
 				</div>'
             );
-            redirect('keputusan/keputusan');
+            redirect('keputusan');
         }
     }
 
@@ -182,6 +176,6 @@ class Keputusan extends CI_Controller
 						</button>
 					</div>'
         );
-        redirect('keputusan/keputusan');
+        redirect('keputusan');
     }
 }

@@ -44,7 +44,7 @@
                     <hr class="bg-secondary">
                 </li>
                 <li class="nav-item">
-                    <a href="<?php echo base_url('Pertanyaan/kuesioner'); ?>" class="nav-link">
+                    <a href="<?php echo base_url('Pertanyaan'); ?>" class="nav-link">
                         <i class="nav-icon fas fa-file-alt"></i>
                         <p>
                             Kelola Pertanyaan
@@ -53,7 +53,7 @@
                     <hr class="bg-secondary">
                 </li>
                 <li class="nav-item">
-                    <a href="<?php echo base_url('Kriteria/kriteria'); ?>" class="nav-link">
+                    <a href="<?php echo base_url('Kriteria'); ?>" class="nav-link">
                         <i class="nav-icon fas fa-cubes"></i>
                         <p>
                             Kelola Kriteria
@@ -62,7 +62,7 @@
                     <hr class="bg-secondary">
                 </li>
                 <li class="nav-item">
-                    <a href="<?php echo base_url('Keputusan/keputusan'); ?>" class="nav-link">
+                    <a href="<?php echo base_url('Keputusan'); ?>" class="nav-link">
                         <i class="nav-icon fab fa-hackerrank"></i>
                         <p>
                             Keputusan

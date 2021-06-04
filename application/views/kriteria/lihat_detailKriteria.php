@@ -58,7 +58,7 @@
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer clearfix">
-                            <a href="<?= base_url('kriteria/kriteria'); ?>"><button type="button" class="btn btn-danger btn-md"><i class="fas fa-undo"></i>&nbsp; Batal</button></a>
+                            <a href="<?= base_url('kriteria'); ?>"><button type="button" class="btn btn-danger btn-md"><i class="fas fa-undo"></i>&nbsp; Batal</button></a>
                         </div>
                     </div>
                     <!-- /.card -->

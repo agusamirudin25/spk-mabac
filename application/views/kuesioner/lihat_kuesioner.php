@@ -53,10 +53,15 @@
                                                 <td><?php echo $kar['nik'] ?></td>
                                                 <td><?php echo $kar['nama'] ?></td>
                                                 <td><?php echo $kar['jabatan'] ?></td>
-                                                <td>
-                                                    <a href="<?= base_url('user/isi_kuesioner/' . $kar['nik']); ?>"><button type="button" class="btn btn-sm btn-info"><i class="fas fa-user-edit"></i>&nbsp; Isi Kuisioner</button></a>
-                                                    <a href="<?= base_url('user/ubah_kuesioner/' . $kar['nik']); ?>"><button type="button" class="btn btn-sm btn-success ml-2" onclick="return confirm('Apakah data ini akan dihapus?');"><i class="fas fa-file-signature"></i>&nbsp; Ubah Kuisioner</button></a>
-                                                </td>
+                                                <?php if ($kar['nilai'] == NULL) : ?>
+                                                    <td>
+                                                        <a href="<?= base_url('kuesioner/isi_kuesioner/' . $kar['kode']); ?>"><button type="button" class="btn btn-sm btn-info"><i class="fas fa-user-edit"></i>&nbsp; Isi Kuesioner</button></a>
+                                                    </td>
+                                                <?php else : ?>
+                                                    <td>
+                                                        <a href="<?= base_url('kuesioner/ubah_kuesioner/' . $kar['kode']); ?>"><button type="button" class="btn btn-sm btn-success"><i class="fas fa-file-signature"></i>&nbsp; Ubah Kuesioner</button></a>
+                                                    </td>
+                                                <?php endif; ?>
                                             </tr>
                                         <?php endforeach; ?>
                                     <?php else : ?>

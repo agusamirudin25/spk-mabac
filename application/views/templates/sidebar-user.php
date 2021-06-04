@@ -44,7 +44,7 @@
                     <class="bg-secondary">
                 </li>
                 <li class="nav-item">
-                    <a href="<?php echo base_url('User/kuesioner'); ?>" class="nav-link">
+                    <a href="<?php echo base_url('kuesioner'); ?>" class="nav-link">
                         <i class="nav-icon fas fa-file-alt"></i>
                         <p>
                             Kelola Kuesioner

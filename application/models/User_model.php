@@ -30,6 +30,6 @@ class User_model extends CI_model
 
     public function getPertanyaan()
     {
-        return $this->db->get('kuisioner')->result_array();
+        return $this->db->get('pertanyaan')->result_array();
     }
 }

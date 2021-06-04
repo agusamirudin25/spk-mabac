@@ -42,50 +42,32 @@
                 <div class="col-md-9">
                     <div class="card card-primary card-outline">
                         <div class="card-header p-2">
-                            <h3 class="profile-username text-left">Kuisioner</h3>
+                            <h3 class="profile-username text-left">Kuesioner</h3>
                         </div><!-- /.card-header -->
                         <div class="card-body">
                             <!-- Post -->
-                            <form action="<?= base_url('user/simpan_kuisioner') ?>" method="post" class="post">
-                                <input type="hidden" readonly class="form-control" id="nik" name="nik" value="<?= $karyawan['nik']; ?>">
+                            <form action="<?= base_url('kuesioner/proses_ubah_kuesioner') ?>" method="post" class="post">
+                                <input type="hidden" readonly class="form-control" id="kode_alternatif" name="kode_alternatif" value="<?= $karyawan['kode']; ?>">
                                 <?php $i = 1;
-                                foreach ($kuisioner as $kuisioner) { ?>
-                                    <input type="hidden" readonly class="form-control" id="kode_<?= $kuisioner['kode']; ?>" name="kode_<?= $kuisioner['kode']; ?>" value="<?= $kuisioner['kode']; ?>">
+                                foreach ($pertanyaan as $kuisioner) { ?>
+                                    <input type="hidden" readonly class="form-control" id="kode_<?= $kuisioner['kode_pertanyaan']; ?>" name="kode_pertanyaan[]" value="<?= $kuisioner['kode_pertanyaan']; ?>">
                                     <label for="kuisioner"><?= $i ?>. <?= $kuisioner['pertanyaan']; ?></label>
                                     <div class="position-relative form-group ml-2">
                                         <div class="form-group">
-                                            <div class="icheck-primary d-inline col-md-3">
-                                                <input type="radio" id="radioPrimary1<?= $i ?>" name="jawab_<?= $kuisioner['kode'] ?>" value="5">
-                                                <label for="radioPrimary1<?= $i ?>">Sangat Baik
-                                                </label>
-                                            </div>
-                                            <div class="icheck-primary d-inline col-md-3">
-                                                <input type="radio" id="radioPrimary2<?= $i ?>" name="jawab_<?= $kuisioner['kode'] ?>" value="4">
-                                                <label for="radioPrimary2<?= $i ?>">Baik
-                                                </label>
-                                            </div>
-                                            <div class="icheck-primary d-inline col-md-3">
-                                                <input type="radio" id="radioPrimary3<?= $i ?>" name="jawab_<?= $kuisioner['kode'] ?>" value="3">
-                                                <label for="radioPrimary3<?= $i ?>"> Cukup Baik
-                                                </label>
-                                            </div>
-                                            <div class="icheck-primary d-inline col-md-3">
-                                                <input type="radio" id="radioPrimary4<?= $i ?>" name="jawab_<?= $kuisioner['kode'] ?>" value="2">
-                                                <label for="radioPrimary4<?= $i ?>">Tidak Baik
-                                                </label>
-                                            </div>
-                                            <div class="icheck-primary d-inline col-md-3">
-                                                <input type="radio" id="radioPrimary5<?= $i ?>" name="jawab_<?= $kuisioner['kode'] ?>" value="1">
-                                                <label for="radioPrimary5<?= $i ?>">Sangat Tidak Baik
-                                                </label>
-                                            </div>
+                                            <?php foreach ($opsi as $br) : ?>
+                                                <div class="icheck-primary d-inline col-md-3">
+                                                    <input type="radio" <?= ($br->nilai == $kuisioner['nilai']) ? 'checked' : null ?> required id="radioPrimary<?= $i . $br->id ?>" name="jawaban_<?= $i ?>" value="<?= $br->nilai ?>">
+                                                    <label for="radioPrimary<?= $i . $br->id ?>"><?= $br->opsi ?>
+                                                    </label>
+                                                </div>
+                                            <?php endforeach; ?>
                                         </div>
                                     </div>
                                 <?php $i++;
                                 } ?>
                                 <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary btn-md"><i class="far fa-address-card"></i>&nbsp; Simpan</button>
-                                    <a href="<?= base_url('user/kuesioner'); ?>"><button type="button" class="btn btn-danger btn-md ml-4"><i class="fas fa-undo"></i>&nbsp; Batal</button></a>
+                                    <button type="submit" class="btn btn-primary btn-md"><i class="far fa-address-card"></i>&nbsp; Ubah</button>
+                                    <a href="<?= base_url('kuesioner'); ?>"><button type="button" class="btn btn-danger btn-md ml-4"><i class="fas fa-undo"></i>&nbsp; Batal</button></a>
                                 </div>
                             </form>
                             <!-- /.post -->

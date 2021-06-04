@@ -16,24 +16,16 @@ class Pertanyaan extends CI_Controller
         }
     }
 
-    public function index()
-    {
-        $this->load->view('templates/header');
-        $this->load->view('templates/sidebar');
-        $this->load->view('login/index');
-        $this->load->view('templates/footer');
-    }
-
     // Menu Kuesioner
 
-    public function kuesioner()
+    public function index()
     {
         $data['judul'] = 'Kuesioner';
         $data['pertanyaan'] = $this->Admin_model->getAllData($table = 'pertanyaan');
-        $data['isi_kuisioner'] = $this->Admin_model->getAllData($table = 'isi_kuisioner');
+        // $data['isi_kuisioner'] = $this->Admin_model->getAllData($table = 'isi_kuisioner');
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar');
-        $this->load->view('pertanyaan/lihat_kuesioner', $data);
+        $this->load->view('pertanyaan/lihat_pertanyaan', $data);
         $this->load->view('templates/footer', $data);
     }
 
@@ -55,7 +47,9 @@ class Pertanyaan extends CI_Controller
         } else {
             $this->Admin_model->insertData($table = 'pertanyaan', $data = [
                 'kode' => $this->input->post('kode'),
-                'pertanyaan' => $this->input->post('pertanyaan', true)
+                'pertanyaan' => $this->input->post('pertanyaan', true),
+                'status' => 1,
+                'dibuat_oleh' => $this->session->username
             ]);
             $this->session->set_flashdata(
                 'message',
@@ -66,7 +60,7 @@ class Pertanyaan extends CI_Controller
 					</button>
 				</div>'
             );
-            redirect('pertanyaan/kuesioner');
+            redirect('pertanyaan');
         }
     }
 
@@ -95,7 +89,7 @@ class Pertanyaan extends CI_Controller
 					</button>
 				</div>'
             );
-            redirect('pertanyaan/kuesioner');
+            redirect('pertanyaan');
         }
     }
 
@@ -111,6 +105,6 @@ class Pertanyaan extends CI_Controller
 						</button>
 					</div>'
         );
-        redirect('pertanyaan/kuesioner');
+        redirect('pertanyaan');
     }
 }

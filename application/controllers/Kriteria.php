@@ -16,16 +16,8 @@ class Kriteria extends CI_Controller
         }
     }
 
-    public function index()
-    {
-        $this->load->view('templates/header');
-        $this->load->view('templates/sidebar');
-        $this->load->view('kriteria/index');
-        $this->load->view('templates/footer');
-    }
-
     //Menu Kriteria
-    public function kriteria()
+    public function index()
     {
         $data['judul'] = 'Kriteria';
         $data['criteria'] = $this->Admin_model->getAllData($table = 'kriteria');
@@ -76,7 +68,7 @@ class Kriteria extends CI_Controller
 					</button>
 				</div>'
             );
-            redirect('kriteria/kriteria');
+            redirect('kriteria');
         }
     }
 
@@ -118,7 +110,7 @@ class Kriteria extends CI_Controller
 					</button>
 				</div>'
             );
-            redirect('kriteria/kriteria');
+            redirect('kriteria');
         }
     }
 
@@ -142,7 +134,7 @@ class Kriteria extends CI_Controller
 						</button>
 					</div>'
         );
-        redirect('kriteria/kriteria');
+        redirect('kriteria');
     }
 
     public function cari_kriteria()
