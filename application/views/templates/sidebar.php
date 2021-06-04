@@ -26,7 +26,7 @@
                 <!-- Add icons to the links using the .nav-icon classwith font-awesome or any other icon font library -->
                 <li class="nav-item">
                 <li class="nav-item">
-                    <a href="<?php echo base_url('Karyawan/karyawan'); ?>" class="nav-link">
+                    <a href="<?php echo base_url('Karyawan'); ?>" class="nav-link">
                         <i class="nav-icon fas fa-id-card"></i>
                         <p>
                             Kelola Karyawan
@@ -35,7 +35,7 @@
                     <hr class="bg-secondary">
                 </li>
                 <li class="nav-item">
-                    <a href="<?php echo base_url('Pengguna/pengguna'); ?>" class="nav-link">
+                    <a href="<?php echo base_url('Pengguna'); ?>" class="nav-link">
                         <i class="nav-icon fas fa-id-badge"></i>
                         <p>
                             Kelola Pengguna

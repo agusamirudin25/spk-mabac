@@ -59,7 +59,7 @@
                             </div>
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-primary btn-md"><i class="far fa-address-card"></i>&nbsp; Simpan</button>
-                                <a href="<?= base_url('pengguna/pengguna'); ?>"><button type="button" class="btn btn-danger btn-md ml-4"><i class="fas fa-undo"></i>&nbsp; Batal</button></a>
+                                <a href="<?= base_url('pengguna'); ?>"><button type="button" class="btn btn-danger btn-md ml-4"><i class="fas fa-undo"></i>&nbsp; Batal</button></a>
                             </div>
                         </form>
                     </div>

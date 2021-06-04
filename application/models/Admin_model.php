@@ -84,7 +84,7 @@ class Admin_model extends CI_Model
     public function cari_dataKaryawan()
     {
         $nama = $this->input->post('keyword', true);
-        $this->db->like('nama', $nama);
+        $this->db->like('alias', $nama);
         return $this->db->get('karyawan');
     }
 
@@ -181,5 +181,19 @@ class Admin_model extends CI_Model
             $kdKeputusan = "A" . str_pad($nilai, 2, "0", STR_PAD_LEFT);
         }
         return $kdKeputusan;
+    }
+
+    public function getLastId($table, $field, $abjad)
+    {
+        $kode = $this->db->select_max($field)->get($table)->row_array();
+        if (is_null($kode['kode'])) {
+            $kode_terakhir = $abjad . "01";
+        } else {
+            $id = substr($kode['kode'], 1);
+            $nilai = (int) $id;
+            $nilai += 1;
+            $kode_terakhir = $abjad . str_pad($nilai, 2, "0", STR_PAD_LEFT);
+        }
+        return $kode_terakhir;
     }
 }

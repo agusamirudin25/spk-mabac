@@ -29,6 +29,7 @@
                                 <div class="form-group">
                                     <label>NIK</label>
                                     <input type="text" readonly class="form-control" id="nik" name="nik" value="<?= $karyawan['nik']; ?>">
+                                    <input type="hidden" readonly class="form-control" id="kode" name="kode" value="<?= $karyawan['kode']; ?>">
                                 </div>
                                 <div class="form-group">
                                     <label>Nama</label>
@@ -57,7 +58,7 @@
                                 </div>
                                 <div class="card-footer">
                                     <button type="submit" class="btn btn-primary btn-md"><i class="far fa-address-card"></i>&nbsp; Simpan</button>
-                                    <a href="<?= base_url('karyawan/karyawan'); ?>"><button type="button" class="btn btn-danger btn-md ml-4"><i class="fas fa-undo"></i>&nbsp; Batal</button></a>
+                                    <a href="<?= base_url('karyawan'); ?>"><button type="button" class="btn btn-danger btn-md ml-4"><i class="fas fa-undo"></i>&nbsp; Batal</button></a>
                                 </div>
                         </form>
                     </div>
@@ -66,71 +67,4 @@
             </div>
         </div>
     </section>
-</div>
-
-
-
-
-
-
-
-
-
-<!-- Content Wrapper. Contains page content 
-<div class="content-wrapper">
-    <!-- Content Header (Page header) 
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col">
-                    <h4>Ubah Data karyawan</h4>
-                    <hr>
-
-                    <?php foreach ($karyawan as $kar) : ?>
-                        <form class="" action="<?= base_url('admin/ubah_aksi'); ?>" method="post">
-                            <input type="hidden" name="nik" value="<?= $kar->nik; ?>">
-                            <div class="form-group">
-                                <label>Nik</label>
-                                <input type="text" name="nik" value="<?php echo $kar->nik ?>" class="form-control">
-                            </div>
-
-                            <div class="form-group">
-                                <label>Nama Depan</label>
-                                <input type="text" name="nm_depan" value="<?php echo $kar->nm_depan ?>" class="form-control">
-                            </div>
-
-                            <div class="form-group">
-                                <label>Nama Belakang</label>
-                                <input type="text" name="nm_belakang" value="<?php echo $kar->nm_belakang ?>" class="form-control">
-                            </div>
-
-                            <div class="form-group">
-                                <label>Alias</label>
-                                <input type="text" name="alias" value="<?php echo $kar->alias ?>" class="form-control">
-                            </div>
-
-                            <div class="form-group">
-                                <label>Pendidikan</label>
-                                <input type="text" name="pendidikan" value="<?php echo $kar->pendidikan ?>" class="form-control">
-                            </div>
-
-                            <div class="form-group">
-                                <label>Jabatan</label>
-                                <input type="text" name="jabatan" value="<?php echo $kar->jabatan ?>" class="form-control">
-                            </div>
-
-                            <div class="form-group">
-                                <label>Tanggal Masuk</label>
-                                <input type="date" name="tgl_masuk" value="<?php echo $kar->tgl_masuk ?>" class="form-control">
-                            </div>
-
-                            <button type="submit" name="button" class="btn btn-primary">Ubah</button>
-                            <a href="<?= base_url('admin/karyawan'); ?>" class="btn btn-danger">Batal</a>
-                        </form>
-                    <?php endforeach; ?>
-
-                </div>
-            </div>
-        </div>
-    </div>
 </div>

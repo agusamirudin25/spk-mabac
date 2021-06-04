@@ -16,17 +16,8 @@ class Karyawan extends CI_Controller
         }
     }
 
-    public function index()
-    {
-        $this->load->view('templates/header');
-        $this->load->view('templates/sidebar');
-        $this->load->view('karyawan/index');
-        $this->load->view('templates/footer');
-    }
-
     //Menu Kelola Karyawan
-
-    public function karyawan()
+    public function index()
     {
         $data['judul'] = 'Karyawan';
         $data['karyawan'] = $this->Admin_model->getAllData($table = 'karyawan');
@@ -63,21 +54,22 @@ class Karyawan extends CI_Controller
             'required' => 'Tanggal masuk harus diisi'
         ]);
 
-
-
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar');
             $this->load->view('karyawan/tambah_karyawan', $data);
             $this->load->view('templates/footer');
         } else {
-            $this->Admin_model->insertData($table = 'karyawan', [
+            $kode = $this->Admin_model->getLastId('karyawan', 'kode', 'A');
+            $this->Admin_model->insertData('karyawan', [
+                'kode' => $kode,
                 'nik' => $this->input->post('nik'),
                 'nama' => $this->input->post('nama', true),
                 'alias' => $this->input->post('alias'),
                 'pendidikan' => $this->input->post('pendidikan'),
                 'jabatan' => $this->input->post('jabatan'),
-                'tgl_masuk' => $this->input->post('tgl_masuk')
+                'tgl_masuk' => $this->input->post('tgl_masuk'),
+                'status' => 1
             ]);
 
             $this->session->set_flashdata(
@@ -89,14 +81,14 @@ class Karyawan extends CI_Controller
 					</button>
 				</div>'
             );
-            redirect('karyawan/karyawan');
+            redirect('karyawan');
         }
     }
 
-    public function ubah_karyawan($nik)
+    public function ubah_karyawan($kode)
     {
         $data['judul'] = 'Ubah Karyawan';
-        $data['karyawan'] = $this->Admin_model->getDataById($table = 'karyawan', $where = ['nik' => $nik]);
+        $data['karyawan'] = $this->Admin_model->getDataById('karyawan', ['kode' => $kode]);
 
         $this->form_validation->set_rules('nik', 'Nik', 'required');
         $this->form_validation->set_rules('nama', 'Nama', 'required|trim', [
@@ -122,13 +114,14 @@ class Karyawan extends CI_Controller
             $this->load->view('karyawan/ubah_karyawan', $data);
             $this->load->view('templates/footer');
         } else {
+            $kode = $this->input->post('kode', TRUE);
             $this->Admin_model->updateData($table = 'karyawan', $data = [
                 'nama' => $this->input->post('nama', true),
                 'alias' => $this->input->post('alias'),
                 'pendidikan' => $this->input->post('pendidikan'),
                 'jabatan' => $this->input->post('jabatan'),
                 'tgl_masuk' => $this->input->post('tgl_masuk')
-            ], $where = ['nik' => $nik]);
+            ], $where = ['kode' => $kode]);
 
             $this->session->set_flashdata(
                 'message',
@@ -139,13 +132,13 @@ class Karyawan extends CI_Controller
 					</button>
 				</div>'
             );
-            redirect('karyawan/karyawan');
+            redirect('karyawan');
         }
     }
 
-    public function hapus_karyawan($nik)
+    public function hapus_karyawan($kode)
     {
-        $this->Admin_model->deleteData($table = 'karyawan', $where = ['nik' => $nik]);
+        $this->Admin_model->deleteData('karyawan', ['kode' => $kode]);
         $this->session->set_flashdata(
             'message',
             '<div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -155,7 +148,7 @@ class Karyawan extends CI_Controller
 						</button>
 					</div>'
         );
-        redirect('karyawan/karyawan');
+        redirect('karyawan');
     }
 
     public function cari_karyawan()

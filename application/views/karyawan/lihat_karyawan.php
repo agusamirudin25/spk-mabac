@@ -61,8 +61,8 @@
                                                 <td><?php echo $kar['jabatan'] ?></td>
                                                 <td><?php echo $kar['tgl_masuk'] ?></td>
                                                 <td>
-                                                    <a href="<?= base_url('karyawan/ubah_karyawan/' . $kar['nik']); ?>"><button type="button" class="btn btn-sm btn-success"><i class="fas fa-user-edit"></i>&nbsp; Ubah</button></a>
-                                                    <a href="<?= base_url('karyawan/hapus_karyawan/' . $kar['nik']); ?>"><button type="button" class="btn btn-sm btn-danger ml-2" onclick="return confirm('Apakah data ini akan dihapus?');"><i class="far fa-trash-alt"></i>&nbsp; Hapus</button></a>
+                                                    <a href="<?= base_url('karyawan/ubah_karyawan/' . $kar['kode']); ?>"><button type="button" class="btn btn-sm btn-success"><i class="fas fa-user-edit"></i>&nbsp; Ubah</button></a>
+                                                    <a href="<?= base_url('karyawan/hapus_karyawan/' . $kar['kode']); ?>"><button type="button" class="btn btn-sm btn-danger ml-2" onclick="return confirm('Apakah data ini akan dihapus?');"><i class="far fa-trash-alt"></i>&nbsp; Hapus</button></a>
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>

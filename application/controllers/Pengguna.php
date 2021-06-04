@@ -16,17 +16,9 @@ class Pengguna extends CI_Controller
         }
     }
 
-    public function index()
-    {
-        $this->load->view('templates/header');
-        $this->load->view('templates/sidebar');
-        $this->load->view('pengguna/index');
-        $this->load->view('templates/footer');
-    }
-
     //     Menu Kelola Pengguna     //
 
-    public function pengguna()
+    public function index()
     {
         $data['users'] = $this->Admin_model->lihat_user();
         $this->load->view('templates/header');
@@ -40,7 +32,7 @@ class Pengguna extends CI_Controller
         // var_dump($data); die;
         $data['role'] = $this->Admin_model->getAllData($table = 'user_role');
         // var_dump($data['role']); die;
-        $this->form_validation->set_rules('nik', 'NIK', 'trim|required', [
+        $this->form_validation->set_rules('nik', 'NIK', 'trim|required|is_unique[user.nik]', [
             'required' => 'Nik harus diisi'
         ]);
         $this->form_validation->set_rules('username', 'Username', 'trim|required|is_unique[user.username]', [
@@ -81,7 +73,7 @@ class Pengguna extends CI_Controller
 					</button>
 				</div>'
             );
-            redirect('pengguna/pengguna'); //pindah ke controller 'Admin', method 'pengguna'
+            redirect('pengguna'); //pindah ke controller 'Admin', method 'pengguna'
         }
     }
 
@@ -130,7 +122,7 @@ class Pengguna extends CI_Controller
 					</button>
 				</div>'
             );
-            redirect('pengguna/pengguna');
+            redirect('pengguna');
         }
     }
 
@@ -159,7 +151,7 @@ class Pengguna extends CI_Controller
             );
         }
 
-        redirect('pengguna/pengguna');
+        redirect('pengguna');
     }
 
     public function cari_user()
