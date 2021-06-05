@@ -10,7 +10,6 @@
             </div>
         </div><!-- /.container-fluid -->
     </section>
-
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
@@ -18,7 +17,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <b>Nilai Keputusan Awal</b>
+                            <b>Nilai Keputusan Akhir</b>
                             <div class="card-tools">
                                 <form class="form-inline" action="<?= base_url('keputusan/cari_karyawan'); ?>" method="POST">
                                     <div class="input-group input-group-sm" style="width: 185px;">
@@ -41,40 +40,18 @@
                                         <th class="thead-custom" scope="col">#</th>
                                         <th class="thead-custom" scope="col">Kode</th>
                                         <th class="thead-custom" scope="col">Alias</th>
-                                        <th class="thead-custom" scope="col">C1</th>
-                                        <th class="thead-custom" scope="col">C2</th>
-                                        <th class="thead-custom" scope="col">C3</th>
-                                        <th class="thead-custom" scope="col">C4</th>
-                                        <th class="thead-custom" scope="col">C5</th>
-                                        <th class="thead-custom" scope="col">Status</th>
-                                        <th class="thead-custom" scope="col">Aksi</th>
+                                        <th class="thead-custom" scope="col">Nilai Akhir</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php $count = 1; ?>
-                                    <?php if (count($penilaian) > 0) : ?>
-                                        <?php foreach ($penilaian as $kep) : ?>
+                                    <?php if ($penilaian->num_rows() > 0) : ?>
+                                        <?php foreach ($mabac as $kep) : ?>
                                             <tr>
                                                 <td><?= $count++; ?></td>
                                                 <td><?php echo $kep['kode'] ?></td>
                                                 <td><?php echo $kep['alias'] ?></td>
-                                                <td><?php echo $kep['C1'] ?></td>
-                                                <td class="<?= ($kep['C2'] == 0) ? 'bg-danger' : null ?>"><?php echo $kep['C2'] ?></td>
-                                                <td><?php echo $kep['C3'] ?></td>
-                                                <td><?php echo $kep['C4'] ?></td>
-                                                <td><?php echo $kep['C5'] ?></td>
-                                                <td class="<?= ($kep['status'] == 1) ? 'bg-success' : 'bg-danger' ?>"><?php echo ($kep['status'] == 1) ? 'Sudah Lengkap' : 'Belum Lengkap' ?></td>
-                                                <?php if ($kep['status'] == 1) : ?>
-                                                    <td>
-                                                        <a href="<?= base_url('keputusan/ubah_penilaian/' . $kep['kode']); ?>"><button type="button" class="btn btn-sm btn-success ml-2"><i class="fas fa-user-edit"></i>&nbsp; Ubah Penilaian</button></a>
-                                                        <a href="<?= base_url('keputusan/hapus_penilaian/' . $kep['kode']); ?>"><button type="button" class="btn btn-sm btn-danger ml-2" onclick="return confirm('Apakah data ini akan dihapus?');"><i class="far fa-trash-alt"></i>&nbsp; Hapus</button></a>
-                                                    </td>
-                                                <?php else : ?>
-                                                    <td>
-                                                        <a href="<?= base_url('keputusan/tambah_penilaian/' . $kep['kode']); ?>"><button type="button" class="btn btn-sm btn-info ml-2"><i class="fas fa-user-edit"></i>&nbsp; Tambah Penilaian</button></a>
-                                                        <a href="<?= base_url('keputusan/hapus_penilaian/' . $kep['kode']); ?>"><button type="button" class="btn btn-sm btn-danger ml-2" onclick="return confirm('Apakah data ini akan dihapus?');"><i class="far fa-trash-alt"></i>&nbsp; Hapus</button></a>
-                                                    </td>
-                                                <?php endif; ?>
+                                                <td><?php echo $kep['nilai'] ?></td>
                                             </tr>
                                         <?php endforeach; ?>
                                     <?php else : ?>
@@ -89,9 +66,9 @@
                                     <?php endif; ?>
                                 </tbody>
                             </table>
-                            <a href="<?= base_url('keputusan/buat_keputusan') ?>" class="btn btn-info mt-4 float-right">
-                                Buat Keputusan
-                            </a>
+                            <span class="btn btn-info mt-4 float-right">
+                                Waktu Proses MABAC = <?= round($waktu, 2, PHP_ROUND_HALF_UP); ?> detik
+                            </span>
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer clearfix">

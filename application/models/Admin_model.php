@@ -201,4 +201,12 @@ class Admin_model extends CI_Model
         }
         return $kode_terakhir;
     }
+    function getMax($table, $field)
+    {
+        return $this->db->select_max($field)->get($table)->row();
+    }
+    function getMin($table, $field)
+    {
+        return $this->db->select_min($field)->get($table)->row();
+    }
 }

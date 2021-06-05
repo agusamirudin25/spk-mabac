@@ -5,23 +5,53 @@ class Keputusan extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('Admin_model');
         $this->load->library('form_validation');
 
         //cek session
         if (!$this->session->userdata('username')) {
             redirect('login');
-        } elseif ($this->session->userdata('role_id') != 1) {
-            redirect('login/blocked');
         }
+
+        $this->load->model('Admin_model');
     }
 
 
     public function index()
     {
         $data['judul'] = 'Karyawan';
-        $data['karyawan'] = $this->Admin_model->getAllData($table = 'karyawan');
+        $data['karyawan'] = $this->Admin_model->getAllData($table = 'karyawan')->result();
         $data['keputusan'] = $this->Admin_model->getAllData($table = 'keputusan');
+        $penilaian = $this->Admin_model->getAllData('v_penilaian')->result();
+        $_data = [];
+        foreach ($penilaian as $br) :
+            if ($br->C2 == NULL || $br->C1 == NULL) {
+                $_data[] = [
+                    'kode' => $br->kode_alternatif,
+                    'nama' => $br->nama_alternatif,
+                    'alias' => $br->alias,
+                    'C1' => (int)$br->C1,
+                    'C2' => (float)$br->C2,
+                    'C3' => (int)$br->C3,
+                    'C4' => (int)$br->C4,
+                    'C5' => (int)$br->C5,
+                    'status' => 0
+                ];
+            } else {
+                $_data[] = [
+                    'kode' => $br->kode_alternatif,
+                    'nama' => $br->nama_alternatif,
+                    'alias' => $br->alias,
+                    'C1' => (int)$br->C1,
+                    'C2' => (float)$br->C2,
+                    'C3' => (int)$br->C3,
+                    'C4' => (int)$br->C4,
+                    'C5' => (int)$br->C5,
+                    'status' => 1
+                ];
+            }
+
+        endforeach;
+        $data['penilaian'] = $_data;
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar');
         $this->load->view('keputusan/lihat_keputusan', $data);
@@ -34,50 +64,19 @@ class Keputusan extends CI_Controller
         redirect('keputusan');
     }
 
-    public function tambah_penilaian($nik)
+    public function tambah_penilaian($kode)
     {
         $data['judul'] = 'Tambah Karyawan';
-        $data['karyawan'] = $this->Admin_model->getDataById($table = 'karyawan', $where = ['nik' => $nik]);
-        $data['kode'] = $this->Admin_model->getAlternatifCode();
-
-        // hitung kuesioner
-        $dataSum = $this->db->select_sum('nilai')->get_where('isi_kuisioner', ['nik' => $nik])->row_array();
-        $jumlahPertanyaan = $this->db->get('kuisioner')->num_rows();
-        // var_dump($jumlahPertanyaan);
-        $avg = (int)$dataSum / $jumlahPertanyaan;
-        // var_dump($avg);
-        if ($avg > 35) {
-            $data['nilaic02'] = 5;
-        } elseif (($avg >= 30) && ($avg <= 34)) {
-            $data['nilaic02'] = 4;
-        } elseif (($avg >= 25) && ($avg <= 29)) {
-            $data['nilaic02'] = 3;
-        } elseif (($avg >= 20) && ($avg <= 24)) {
-            $data['nilaic02'] = 2;
-        } elseif ($avg <= 34) {
-            $data['nilaic02'] = 1;
+        $data['karyawan'] = $this->Admin_model->getAllData('karyawan', ['kode' => $kode])->row();
+        $data['kriteria'] = $this->Admin_model->getAllData('kriteria')->result();
+        $nilai_c2 = $this->Admin_model->getAllData('penilaian', ['kd_alternatif' => $kode, 'kd_kriteria' => 'C2'])->row();
+        if ($nilai_c2) {
+            $data['nilai_c2'] = (float) $nilai_c2->nilai;
+        } else {
+            $data['nilai_c2'] = 0;
         }
-
-        $this->form_validation->set_rules('kode', 'Kode', 'trim|required', [
-            'required' => 'Kriteria Absensi harus diisi',
-        ]);
         $this->form_validation->set_rules('nama', 'Nama', 'trim|required', [
             'required' => 'Kriteria Absensi harus diisi',
-        ]);
-        $this->form_validation->set_rules('c01', 'C01', 'trim|required', [
-            'required' => 'Kriteria Absensi harus diisi',
-        ]);
-        $this->form_validation->set_rules('c02', 'C02', 'trim|required', [
-            'required' => 'Kriteria Disiplin Kerja harus diisi',
-        ]);
-        $this->form_validation->set_rules('c03', 'C03', 'trim|required', [
-            'required' => 'Kriteria Lama Bekerja harus diisi',
-        ]);
-        $this->form_validation->set_rules('c04', 'C04', 'trim|required', [
-            'required' => 'Kriteria Kreatifitas harus diisi',
-        ]);
-        $this->form_validation->set_rules('c05', 'C05', 'trim|required', [
-            'required' => 'Kriteria Pendidikan harus diisi',
         ]);
 
         if ($this->form_validation->run() == FALSE) {
@@ -86,28 +85,33 @@ class Keputusan extends CI_Controller
             $this->load->view('keputusan/tambah_penilaian', $data);
             $this->load->view('templates/footer');
         } else {
-            $c02 = $this->input->post('c02');
+            $input = $this->input->post(null, true);
+            $_data = [];
+            $nilai = $input['nilai'];
+            $kd_kriteria = $input['kd_kriteria'];
+            $i = 0;
+            foreach ($nilai as $n) :
+                $_data[] = [
+                    'kd_alternatif' => $kode,
+                    'kd_kriteria' => $kd_kriteria[$i++],
+                    'nilai' => $n,
+                    'status' => 1
+                ];
+            endforeach;
 
-            $this->Admin_model->insertData($table = 'keputusan', [
-                'kode' => $this->input->post('kode'),
-                'nama' => $this->input->post('nama', true),
-                'c01' => $this->input->post('c01'),
-                'c02' => $c02,
-                'c03' => $this->input->post('c03'),
-                'c04' => $this->input->post('c04'),
-                'c05' => $this->input->post('c05')
-            ]);
-
-            $this->session->set_flashdata(
-                'message',
-                '<div class="alert alert-success alert-dismissible fade show" role="alert">
+            $insert = $this->Admin_model->insertBatch('penilaian', $_data);
+            if ($insert) {
+                $this->session->set_flashdata(
+                    'message',
+                    '<div class="alert alert-success alert-dismissible fade show" role="alert">
 					Kriteria baru <strong>berhasil dibuat</strong>
 					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true">&times;</span>
 					</button>
-				</div>'
-            );
-            redirect('keputusan');
+                    </div>'
+                );
+                redirect('keputusan');
+            }
         }
     }
 
@@ -120,21 +124,7 @@ class Keputusan extends CI_Controller
         $this->form_validation->set_rules('nama', 'Nama', 'required|trim', [
             'required' => 'Nama harus diisi',
         ]);
-        $this->form_validation->set_rules('c01', 'C01', 'required|trim|max_length[10]', [
-            'required' => 'Kriteria Absensi harus diisi',
-        ]);
-        $this->form_validation->set_rules('c02', 'C02', 'required|trim|max_length[10]', [
-            'required' => 'Kriteria Disiplin Kerja harus diisi',
-        ]);
-        $this->form_validation->set_rules('c03', 'C03', 'required|trim|max_length[10]', [
-            'required' => 'Kriteria Lama Bekerja harus diisi',
-        ]);
-        $this->form_validation->set_rules('c04', 'C04', 'required|trim|max_length[10]', [
-            'required' => 'Kriteria Kreatifitas harus diisi',
-        ]);
-        $this->form_validation->set_rules('c05', 'C05', 'required|trim|max_length[10]', [
-            'required' => 'Kriteria Pendidikan harus diisi',
-        ]);
+
 
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('templates/header', $data);
@@ -177,5 +167,116 @@ class Keputusan extends CI_Controller
 					</div>'
         );
         redirect('keputusan');
+    }
+
+    function buat_keputusan()
+    {
+        $waktuAwal = microtime(true);
+        $penilaian = $this->Admin_model->getAllData('v_penilaian')->result();
+        $kriteria = $this->Admin_model->getAllData('kriteria')->result();
+        $karyawan = $this->Admin_model->getAllData('v_penilaian')->result();
+
+        // NORMALISASI
+        $nilai_max['C1'] = $this->Admin_model->getMax('v_penilaian', 'C1')->C1;
+        $nilai_max['C2'] = $this->Admin_model->getMax('v_penilaian', 'C2')->C2;
+        $nilai_max['C3'] = $this->Admin_model->getMax('v_penilaian', 'C3')->C3;
+        $nilai_max['C4'] = $this->Admin_model->getMax('v_penilaian', 'C4')->C4;
+        $nilai_max['C5'] = $this->Admin_model->getMax('v_penilaian', 'C5')->C5;
+
+        $nilai_min['C1'] = $this->Admin_model->getMin('v_penilaian', 'C1')->C1;
+        $nilai_min['C2'] = $this->Admin_model->getMin('v_penilaian', 'C2')->C2;
+        $nilai_min['C3'] = $this->Admin_model->getMin('v_penilaian', 'C3')->C3;
+        $nilai_min['C4'] = $this->Admin_model->getMin('v_penilaian', 'C4')->C4;
+        $nilai_min['C5'] = $this->Admin_model->getMin('v_penilaian', 'C5')->C5;
+        $normalisasi = [];
+
+        foreach ($penilaian as $br) {
+            $normalisasi[$br->kode_alternatif]['C1'] = round((float) ($br->C1 - $nilai_min['C1']) / ($nilai_max['C1'] - $nilai_min['C1']), 2, PHP_ROUND_HALF_ODD);
+            $normalisasi[$br->kode_alternatif]['C2'] = round((float) ($br->C2 - $nilai_min['C2']) / ($nilai_max['C2'] - $nilai_min['C2']), 2, PHP_ROUND_HALF_ODD);
+            $normalisasi[$br->kode_alternatif]['C3'] = round((float) ($br->C3 - $nilai_min['C3']) / ($nilai_max['C3'] - $nilai_min['C3']), 2, PHP_ROUND_HALF_ODD);
+            $normalisasi[$br->kode_alternatif]['C4'] = round((float) ($br->C4 - $nilai_min['C4']) / ($nilai_max['C4'] - $nilai_min['C4']), 2, PHP_ROUND_HALF_ODD);
+            $normalisasi[$br->kode_alternatif]['C5'] = round((float) ($br->C5 - $nilai_min['C5']) / ($nilai_max['C5'] - $nilai_min['C5']), 2, PHP_ROUND_HALF_ODD);
+        }
+
+        // MATRIKS BOBOT KEPUTUSAN
+        $_matriks = [];
+        foreach ($karyawan as $alternatif) {
+            // $bobot = $krt->bobot;
+            $_matriks[$alternatif->kode_alternatif]['kode'] = $alternatif->kode_alternatif;
+            foreach ($kriteria as $krt) {
+                $_temp = ($krt->bobot * $normalisasi[$alternatif->kode_alternatif][$krt->kode]) + $krt->bobot;
+                array_push($_matriks[$alternatif->kode_alternatif], $_temp);
+            }
+        }
+
+        // MATRIKS BATAS (G)
+        $_g = [];
+        $_count = count($_matriks);
+        $wadah = [];
+        $init = 1;
+        $c1 = 1;
+        $c2 = 1;
+        $c3 = 1;
+        $c4 = 1;
+        $c5 = 1;
+        foreach ($_matriks as $m) {
+            $c1 *= $m[0];
+            $c2 *= $m[1];
+            $c3 *= $m[2];
+            $c4 *= $m[3];
+            $c5 *= $m[4];
+        }
+        $_g = [
+            'C1' => pow($c1, 1 / $_count),
+            'C2' => pow($c2, 1 / $_count),
+            'C3' => pow($c3, 1 / $_count),
+            'C4' => pow($c4, 1 / $_count),
+            'C5' => pow($c5, 1 / $_count),
+        ];
+
+        // Perhitungan elemen matriks jarak alternatif dari daerah perkiraan perbatasn (Q)
+        $_q = [];
+        foreach ($_matriks as $m) {
+            $_q[] = [
+                'kode' => $m['kode'],
+                'Q1' => $m[0] - $_g['C1'],
+                'Q2' => $m[1] - $_g['C2'],
+                'Q3' => $m[2] - $_g['C3'],
+                'Q4' => $m[3] - $_g['C4'],
+                'Q5' => $m[4] - $_g['C5']
+            ];
+        }
+
+        // Perangkingan Alternatif (S)
+        $_s = [];
+        foreach ($_q as $perbatasan) {
+            $getKaryawan = $this->Admin_model->getAllData('v_penilaian', ['kode_alternatif' => $perbatasan['kode']])->row();
+            $_s[$getKaryawan->kode_alternatif] = [
+                'nilai' => $perbatasan['Q1'] + $perbatasan['Q2'] + $perbatasan['Q3'] + $perbatasan['Q4'] + $perbatasan['Q5']
+            ];
+        }
+        //inisialisasi waktu akhir
+        $waktuAkhir = microtime(true);
+
+        //sort berdasarkan nilai tertinggi
+        arsort($_s);
+        $mabac = [];
+        foreach ($_s as $key => $hasilAkhir) {
+            $alias = $this->Admin_model->getAllData('v_penilaian', ['kode_alternatif' => $key])->row()->alias;
+            $mabac[] = [
+                'kode' => $key,
+                'alias' => $alias,
+                'nilai' => $hasilAkhir['nilai']
+            ];
+        }
+        //waktu eksekusi mabac
+        $waktuTempuh = $waktuAkhir - $waktuAwal;
+        $data['mabac'] = $mabac;
+        $data['waktu'] = $waktuTempuh;
+        $data['penilaian'] = $this->Admin_model->getAllData('v_penilaian');
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar');
+        $this->load->view('keputusan/buat_keputusan', $data);
+        $this->load->view('templates/footer', $data);
     }
 }

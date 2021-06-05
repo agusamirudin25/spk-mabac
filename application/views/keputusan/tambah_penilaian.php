@@ -27,42 +27,21 @@
                         <form method="POST" action="" class="form-custom">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label>Kode</label>
-                                    <input type="text" readonly class="form-control" id="kode" name="kode" value="<?= $kode; ?>">
-                                    <?= form_error('c01', '<small class="text-danger">', '</small>'); ?>
+                                    <label>Nama Karyawan</label>
+                                    <input type="text" readonly class="form-control" id="nama" name="nama" value="<?= $karyawan->nama; ?>">
                                 </div>
-                                <div class="form-group">
-                                    <label>Alternatif</label>
-                                    <input type="text" readonly class="form-control" id="nama" name="nama" value="<?= $karyawan['nama']; ?>">
-                                </div>
-                                <div class="form-group">
-                                    <label>C01</label>
-                                    <input type="text" class="form-control" id="c01" name="c01" placeholder="Nilai kriteria absensi" value="<?= set_value('c01'); ?>">
-                                    <?= form_error('c01', '<small class="text-danger">', '</small>'); ?>
-                                </div>
-                                <div class="form-group">
-                                    <label>C02</label>
-                                    <input type="text" class="form-control" id="c02" name="c02" placeholder="Nilai kriteria disiplin kerja" readonly value="<?= $nilaic02 ?>">
-                                    <?= form_error('c02', '<small class="text-danger">', '</small>'); ?>
-                                </div>
-                                <div class="form-group">
-                                    <label>C03</label>
-                                    <input type="text" class="form-control" id="c03" name="c03" placeholder="Nilai kriteria lama bekerja" value="<?= set_value('c03'); ?>">
-                                    <?= form_error('c03', '<small class="text-danger">', '</small>'); ?>
-                                </div>
-                                <div class="form-group">
-                                    <label>C04</label>
-                                    <input type="text" class="form-control" id="c04" name="c04" placeholder="Nilai kriteria pendidikan" value="<?= set_value('c04'); ?>">
-                                    <?= form_error('c04', '<small class="text-danger">', '</small>'); ?>
-                                </div>
-                                <div class="form-group">
-                                    <label>C05</label>
-                                    <input type="text" class="form-control" id="c05" name="c05" placeholder="Nilai kriteria kreatifitas" value="<?= set_value('c05'); ?>">
-                                    <?= form_error('c05', '<small class="text-danger">', '</small>'); ?>
-                                </div>
+                                <?php foreach ($kriteria as $krt) : ?>
+                                    <div class="form-group">
+                                        <label><?= $krt->kode . ' - ' . $krt->nama ?></label>
+                                        <input type="number" class="form-control" id="<?= $krt->kode ?>" name="nilai[]" placeholder="Nilai Kriteria <?= $krt->nama ?>" required <?= ($krt->kode == 'C2' ? 'disabled' : null) ?> value="<?= ($krt->kode == 'C2') ? $nilai_c2 : 0 ?>">
+                                        <?php if ($krt->kode != 'C2') : ?>
+                                            <input type="hidden" name="kd_kriteria[]" value="<?= $krt->kode ?>">
+                                        <?php endif; ?>
+                                    </div>
+                                <?php endforeach; ?>
                                 <div class="card-footer">
                                     <button type="submit" class="btn btn-primary btn-md"><i class="far fa-address-card"></i>&nbsp; Simpan</button>
-                                    <a href="<?= base_url('keputusan/keputusan'); ?>"><button type="button" class="btn btn-danger btn-md ml-4"><i class="fas fa-undo"></i>&nbsp; Batal</button></a>
+                                    <a href="<?= base_url('keputusan'); ?>"><button type="button" class="btn btn-danger btn-md ml-4"><i class="fas fa-undo"></i>&nbsp; Batal</button></a>
                                 </div>
                         </form>
                     </div>

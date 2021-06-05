@@ -14,6 +14,10 @@ class Login extends CI_Controller
 
     public function index()
     {
+        //cek session
+        if ($this->session->userdata('username')) {
+            redirect('beranda');
+        }
         $data['judul'] = 'Login page';
         $this->form_validation->set_rules('username', 'Username', 'required|trim', [
             'required' => 'Nama harus diisi'

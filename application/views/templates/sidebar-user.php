@@ -53,6 +53,15 @@
                     <class="bg-secondary">
                 </li>
                 <li class="nav-item">
+                    <a href="<?php echo base_url('keputusan'); ?>" class="nav-link">
+                        <i class="nav-icon fas fa-file-alt"></i>
+                        <p>
+                            Keputusan
+                        </p>
+                    </a>
+                    <class="bg-secondary">
+                </li>
+                <li class="nav-item">
                     <a href="<?php echo base_url('Admin/home'); ?>" class="nav-link">
                         <i class="nav-icon fas fa-copy"></i>
                         <p>
