@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-4">
-                    <h3>Form Ubah Karyawan</h3>
+                    <h3>Form Ubah Penilaian</h3>
                 </div>
             </div>
         </div><!-- /.container-fluid -->
