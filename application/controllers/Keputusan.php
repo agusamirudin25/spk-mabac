@@ -122,8 +122,8 @@ class Keputusan extends CI_Controller
     public function ubah_penilaian($kode)
     {
         $data['judul'] = 'Ubah Keputusan';
-        $data['keputusan'] = $this->Admin_model->getDataById($table = 'keputusan', $where = ['kode' => $kode]);
-
+        $data['keputusan'] = $this->Admin_model->getDataById($table = 'v_penilaian', $where = ['kode_alternatif' => $kode]);
+        $data['kriteria'] = $this->Admin_model->getAllData('kriteria')->result();
         $this->form_validation->set_rules('kode', 'Kode', 'required');
         $this->form_validation->set_rules('nama', 'Nama', 'required|trim', [
             'required' => 'Nama harus diisi',
@@ -132,18 +132,29 @@ class Keputusan extends CI_Controller
 
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar');
+            if ($this->session->role_id == 1) {
+                $this->load->view('templates/sidebar');
+            } else {
+                $this->load->view('templates/sidebar-user');
+            }
             $this->load->view('keputusan/ubah_penilaian', $data);
             $this->load->view('templates/footer');
         } else {
-            $this->Admin_model->updateData($table = 'keputusan', $data = [
-                'nama' => $this->input->post('nama', true),
-                'c01' => $this->input->post('c01'),
-                'c02' => $this->input->post('c02'),
-                'c03' => $this->input->post('c03'),
-                'c04' => $this->input->post('c04'),
-                'c05' => $this->input->post('c05')
-            ], $where = ['kode' => $kode]);
+            $input = $this->input->post(null, TRUE);
+            $kd_kriteria = $input['kd_kriteria'];
+            $i = 0;
+            foreach ($input['nilai'] as $nilai) :
+                $dataUpdate = [
+                    'kd_kriteria' => $kd_kriteria[$i],
+                    'nilai' => $nilai,
+                ];
+                $where = [
+                    'kd_alternatif' => $kode,
+                    'kd_kriteria' => $kd_kriteria[$i++]
+                ];
+
+                $this->Admin_model->updateData('penilaian', $dataUpdate, $where);
+            endforeach;
 
             $this->session->set_flashdata(
                 'message',
