@@ -11,8 +11,6 @@ class Pertanyaan extends CI_Controller
         //cek session
         if (!$this->session->userdata('username')) {
             redirect('login');
-        } elseif ($this->session->userdata('role_id') != 1) {
-            redirect('login/blocked');
         }
     }
 
@@ -20,11 +18,15 @@ class Pertanyaan extends CI_Controller
 
     public function index()
     {
-        $data['judul'] = 'Kuesioner';
+        $data['judul'] = 'Pertanyaan';
         $data['pertanyaan'] = $this->Admin_model->getAllData($table = 'pertanyaan');
         // $data['isi_kuisioner'] = $this->Admin_model->getAllData($table = 'isi_kuisioner');
         $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar');
+        if ($this->session->role_id == 1) {
+            $this->load->view('templates/sidebar');
+        } else {
+            $this->load->view('templates/sidebar-user');
+        }
         $this->load->view('pertanyaan/lihat_pertanyaan', $data);
         $this->load->view('templates/footer', $data);
     }

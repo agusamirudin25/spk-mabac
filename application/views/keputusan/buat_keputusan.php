@@ -19,17 +19,6 @@
                         <div class="card-header">
                             <b>Nilai Keputusan Akhir</b>
                             <div class="card-tools">
-                                <form class="form-inline" action="<?= base_url('keputusan/cari_karyawan'); ?>" method="POST">
-                                    <div class="input-group input-group-sm" style="width: 185px;">
-                                        <input type="text" id="keyword" name="keyword" class="form-control float-right" placeholder="Cari Berdasarkan Alias">
-
-                                        <div class="input-group-append">
-                                            <button type="submit" class="btn btn-default">
-                                                <i class="fas fa-search"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
                             </div>
                         </div>
                         <!-- /.card-header -->

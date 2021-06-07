@@ -26,19 +26,10 @@
                 <!-- Add icons to the links using the .nav-icon classwith font-awesome or any other icon font library -->
                 <li class="nav-item">
                 <li class="nav-item">
-                    <a href="<?php echo base_url('User/karyawan'); ?>" class="nav-link">
+                    <a href="<?php echo base_url('Pertanyaan'); ?>" class="nav-link">
                         <i class="nav-icon fas fa-id-card"></i>
                         <p>
-                            Kelola Karyawan
-                        </p>
-                    </a>
-                    <class="bg-secondary">
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-id-badge"></i>
-                        <p>
-                            My Profile
+                            Kelola Pertanyaan
                         </p>
                     </a>
                     <class="bg-secondary">

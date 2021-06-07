@@ -53,7 +53,11 @@ class Keputusan extends CI_Controller
         endforeach;
         $data['penilaian'] = $_data;
         $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar');
+        if ($this->session->role_id == 1) {
+            $this->load->view('templates/sidebar');
+        } else {
+            $this->load->view('templates/sidebar-user');
+        }
         $this->load->view('keputusan/lihat_keputusan', $data);
         $this->load->view('templates/footer', $data);
     }
@@ -275,7 +279,11 @@ class Keputusan extends CI_Controller
         $data['waktu'] = $waktuTempuh;
         $data['penilaian'] = $this->Admin_model->getAllData('v_penilaian');
         $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar');
+        if ($this->session->role_id == 1) {
+            $this->load->view('templates/sidebar');
+        } else {
+            $this->load->view('templates/sidebar-user');
+        }
         $this->load->view('keputusan/buat_keputusan', $data);
         $this->load->view('templates/footer', $data);
     }

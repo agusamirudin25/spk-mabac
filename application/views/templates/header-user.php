@@ -54,13 +54,13 @@
                 <li class="dropdown user user-menu">
                     <a href="" class="dropdown-toggle" data-toggle="dropdown">
                         <img src="<?= base_url(); ?>assets/files/dist/img/avatar3.png" class="user-image" alt="User Image">
-                        User
+                        <?= ($this->session->role_id == 1) ? 'Administrator' : 'Manager' ?>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
                             <img src="<?= base_url(); ?>assets/files/dist/img/avatar3.png" class="img-circle" alt="User Image">
-                            <p>User</p>
+                            <p><?= ($this->session->role_id == 1) ? 'Administrator' : 'Manager' ?></p>
                         </li>
                         <!-- Menu Footer-->
                         <li class="user-footer">

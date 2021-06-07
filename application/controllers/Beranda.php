@@ -11,15 +11,17 @@ class Beranda extends CI_Controller
         //cek session
         if (!$this->session->userdata('username')) {
             redirect('login');
-        } elseif ($this->session->userdata('role_id') != 1) {
-            redirect('login/blocked');
         }
     }
 
     public function index()
     {
         $this->load->view('templates/header');
-        $this->load->view('templates/sidebar');
+        if ($this->session->role_id == 1) {
+            $this->load->view('templates/sidebar');
+        } else {
+            $this->load->view('templates/sidebar-user');
+        }
         $this->load->view('beranda/index');
         $this->load->view('templates/footer');
     }
